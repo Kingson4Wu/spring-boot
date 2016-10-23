@@ -1,11 +1,17 @@
 package com.sishuok.controller;
 
 import com.sishuok.entity.User;
-import org.springframework.boot.SpringApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * <p>User: Zhang Kaitao
@@ -17,11 +23,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @RequestMapping("/{id}")
     public User view(@PathVariable("id") Long id) {
         User user = new User();
         user.setId(id);
         user.setName("zhang");
+
+        System.out.println(User.class.getClassLoader());
+        try {
+            User user2 = (User) Class.forName("com.sishuok.entity.User").newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return user;
     }
 
@@ -56,5 +75,28 @@ public class UserController {
     public User object(User user) {
 
         return user;
+    }
+
+
+    @RequestMapping("/receiveTask")
+    public String receiveTask(HttpServletRequest request) throws IOException {
+        logger.info("request method: {}", request.getMethod());
+        Map<String, String[]> map = request.getParameterMap();
+
+        for (Map.Entry<String, String[]> entry : map.entrySet()) {
+            logger.info("key:{}, value: {}, values length: {}", entry.getKey(), entry.getValue()[0], entry.getValue().length);
+        }
+        if ("POST".equals(request.getMethod())) {
+            StringBuilder jb = new StringBuilder();
+            String line = null;
+            BufferedReader reader = request.getReader();
+            while ((line = reader.readLine()) != null) {
+                jb.append(line);
+            }
+            logger.info("post content: {}", jb);
+        }
+
+
+        return "success";
     }
 }  
