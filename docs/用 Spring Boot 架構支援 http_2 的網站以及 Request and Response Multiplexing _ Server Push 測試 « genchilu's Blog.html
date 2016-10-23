@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://genchilu-blog.logdown.com/posts/746243 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/8d5b66bcc5"></script><script src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/nr-963.min.js"></script><script src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/cb=gapi.loaded_1" async=""></script><script src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/cb=gapi.loaded_0" async=""></script><script type="text/javascript" async="" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/atrk.js"></script><script id="twitter-wjs" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/widgets.js"></script><script type="text/javascript" async="" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/plusone.js" gapi_processed="true"></script><script id="facebook-jssdk" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/all.js"></script><script type="text/javascript" async="" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/inpage_linkid.js" id="undefined"></script><script type="text/javascript" async="" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/ga.js"></script><script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"8d5b66bcc5","applicationID":"19028431","transactionName":"e1cLFUpbX18DFE5IWEtMFk5LXFxE","queueTime":4,"applicationTime":123,"agent":""}</script>
+<script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o||e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(t,e,n){function r(){}function o(t,e,n){return function(){return i(t,[(new Date).getTime()].concat(u(arguments)),e?null:this,n),e?void 0:this}}var i=t("handle"),a=t(2),u=t(3),c=t("ee").get("tracer"),f=NREUM;"undefined"==typeof window.newrelic&&(newrelic=f);var s=["setPageViewName","setCustomAttribute","finished","addToTrace","inlineHit"],p="api-",l=p+"ixn-";a(s,function(t,e){f[e]=o(p+e,!0,"api")}),f.addPageAction=o(p+"addPageAction",!0),e.exports=newrelic,f.interaction=function(){return(new r).get()};var d=r.prototype={createTracer:function(t,e){var n={},r=this,o="function"==typeof e;return i(l+"tracer",[Date.now(),t,n],r),function(){if(c.emit((o?"":"no-")+"fn-start",[Date.now(),r,o],n),o)try{return e.apply(this,arguments)}finally{c.emit("fn-end",[Date.now()],n)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){d[e]=o(l+e)}),newrelic.noticeError=function(t){"string"==typeof t&&(t=new Error(t)),i("err",[t,(new Date).getTime()])}},{}],2:[function(t,e,n){function r(t,e){var n=[],r="",i=0;for(r in t)o.call(t,r)&&(n[i]=e(r,t[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],3:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(o<0?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=r},{}],ee:[function(t,e,n){function r(){}function o(t){function e(t){return t&&t instanceof r?t:t?u(t,a,i):i()}function n(n,r,o){t&&t(n,r,o);for(var i=e(o),a=l(n),u=a.length,c=0;c<u;c++)a[c].apply(i,r);var s=f[m[n]];return s&&s.push([w,n,r,i]),i}function p(t,e){g[t]=l(t).concat(e)}function l(t){return g[t]||[]}function d(t){return s[t]=s[t]||o(n)}function v(t,e){c(t,function(t,n){e=e||"feature",m[n]=e,e in f||(f[e]=[])})}var g={},m={},w={on:p,emit:n,get:d,listeners:l,context:e,buffer:v};return w}function i(){return new r}var a="nr@context",u=t("gos"),c=t(2),f={},s={},p=e.exports=o();p.backlog=f},{}],gos:[function(t,e,n){function r(t,e,n){if(o.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[e]=r,r}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){o.buffer([t],r),o.emit(t,e,n)}var o=t("ee").get("handle");e.exports=r,r.ee=o},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!h++){var t=y.info=NREUM.info,e=s.getElementsByTagName("script")[0];if(t&&t.licenseKey&&t.applicationID&&e){c(m,function(e,n){t[e]||(t[e]=n)});var n="https"===g.split(":")[0]||t.sslForHttp;y.proto=n?"https://":"http://",u("mark",["onload",a()],null,"api");var r=s.createElement("script");r.src=y.proto+t.agent,e.parentNode.insertBefore(r,e)}}}function o(){"complete"===s.readyState&&i()}function i(){u("mark",["domContent",a()],null,"api")}function a(){return(new Date).getTime()}var u=t("handle"),c=t(2),f=window,s=f.document,p="addEventListener",l="attachEvent",d=f.XMLHttpRequest,v=d&&d.prototype;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:d,REQ:f.Request,EV:f.Event,PR:f.Promise,MO:f.MutationObserver},t(1);var g=""+location,m={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-963.min.js"},w=d&&v&&v[p]&&!/CriOS/.test(navigator.userAgent),y=e.exports={offset:a(),origin:g,features:{},xhrWrappable:w};s[p]?(s[p]("DOMContentLoaded",i,!1),f[p]("load",r,!1)):(s[l]("onreadystatechange",o),f[l]("onload",r)),u("mark",["firstbyte",a()],null,"api");var h=0},{}]},{},["loader"]);</script>
+<title>用 Spring Boot 架構支援 http/2 的網站以及 Request and Response Multiplexing / Server Push 測試 « genchilu's Blog</title>
+<meta name="description" content="本文將簡單示範如何在 Spring Boot 上架設支援 http/2 的網站，以及實際測試 http/2 的 Request and Response Multiplexing，和實作 ser...">
+<meta property="og:title" content="用 Spring Boot 架構支援 http/2 的網站以及 Request and Response Multiplexing / Server Push 測試 « genchilu&#39;s Blog">
+<meta property="og:description" content="本文將簡單示範如何在 Spring Boot 上架設支援 http/2 的網站，以及實際測試 http/2 的 Request and Response Multiplexing，和實作 ser...">
+<meta property="og:url" content="http://genchilu-blog.logdown.com/posts/746243">
+<meta property="og:image">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link href="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/css" rel="stylesheet" type="text/css">
+<meta name="robots" content="INDEX,FOLLOW">
+<link rel="image_src" href="http://logdown.com/images/og_plain.jpg">
+
+
+<link rel="alternate" type="application/rss+xml" title="genchilu&#39;s Blog" href="http://genchilu-blog.logdown.com/posts.rss">
+<link rel="alternate" type="application/atom+xml" title="genchilu&#39;s Blog" href="http://genchilu-blog.logdown.com/posts.atom">
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+
+  var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-41764280-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><script type="text/javascript" charset="utf-8" async="" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/button.1813ea3f78757294e1ba1cea21b068a0.js"></script><link id="vTabsCoreCSS" rel="stylesheet" href="chrome-extension://okpnlgbgcfchbicbhjmmhldhkbkfilce/themes/styles.css"><style type="text/css">@media print{#STTBimg{ display:none; }#STTBimg2{ display:none; }}</style><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(https://static.xx.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(https://static.xx.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(https://static.xx.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_loader{background-color:#f6f7f9;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(https://static.xx.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(https://static.xx.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(https://static.xx.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(https://static.xx.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v2/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{width:auto;height:auto;min-height:initial;min-width:initial;background:none}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{color:#fff;display:block;padding-top:20px;clear:both;font-size:18px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;bottom:0;left:0;right:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #29487d;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f6f7f9;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v2/yD/r/t-wz8gw1xG1.png);background-repeat:no-repeat;background-position:50% 50%;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(https://static.xx.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}</style></head>
+
+<body class=" "><img id="STTBimg" src="chrome-extension://chinfkfmaefdlchhempbfgbdagheknoj/arrows/arrow_blue.png" style="opacity: 0.5; position: fixed; width: 50px; height: auto; z-index: 2147483647; border: 0px; padding: 0px; top: 20px; right: 20px; margin: 0px; cursor: pointer; display: block;"><div id="MathJax_Message" style="display: none;"></div>
+
+  <div class="wrapper">
+    <header class="header">
+      <div class="search">
+        <form accept-charset="UTF-8" action="http://genchilu-blog.logdown.com/posts/search" method="get">
+          <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
+         <input class="search-box" type="text" name="q" results="0" value="" placeholder="Search">
+        </form>
+      </div>
+      <div class="logo">
+        <h1><a href="http://genchilu-blog.logdown.com/">genchilu's Blog</a></h1>
+        <span class="tagline">  </span>
+      </div>
+      <nav class="nav chrome-hack">
+        <ul class="inline-list">
+          
+            
+              <li>
+                <a href="http://genchilu-blog.logdown.com/pages/about-me" title="About Me">
+                  <i class="icon-file"></i>
+                  <span>About Me</span>
+                </a>
+              </li>
+            
+          
+          <li>
+            <a href="http://genchilu-blog.logdown.com/archives">
+              <i class="icon-archive"></i><span>Archive</span>
+            </a>
+         </li>
+          <li>
+            <a href="http://genchilu-blog.logdown.com/posts.atom" target="_blank">
+              <i class="icon-rss"></i><span>feeds</span>
+            </a>
+         </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="content">
+
+      
+
+      
+
+      
+
+      
+
+
+
+
+      
+        <div class="post container">
+
+          <div class="rel-date" data-timestamp="1467303660"> 大约 1 个月 ago </div>
+
+          <div class="title">
+            <h2>
+              <a href="http://genchilu-blog.logdown.com/posts/746243">
+                
+                  用 Spring Boot 架構支援 http/2 的網站以及 Request and Response Multiplexing / Server Push 測試
+                
+
+                
+              </a>
+            </h2>
+          </div>
+
+          <div class="article">
+            
+
+
+            
+
+            
+              <p>本文將簡單示範如何在 Spring Boot 上架設支援 http/2 的網站，以及實際測試 http/2 的 Request and Response Multiplexing，和實作 server push。</p>
+
+<p>若你想更深入了解 http/2 底層及其運作原理，可參考 <a href="https://hpbn.co/http2/">https://hpbn.co/http2/</a>。</p>
+<h2>環境</h2>
+<ul>
+<li>jdk 1.8 以上</li>
+<li>gradle 2.3 以上</li>
+</ul>
+<h2>embedded container</h2>
+<p>目前 embedded container 僅 jetty 和 undertow 可支援 http/2。<br>
+雖然用 undertow 定比較簡單，但是我在實作 server push 時一直無法成功，因此最後還是採取用 jetty。</p>
+
+<p>http/2 設定主要參考 <a href="https://github.com/bclozel/http2-experiments">http/2 with jetty</a>，若是有興趣了解如何用 undertow，可參考 <a href="https://vanwilgenburg.wordpress.com/2016/04/01/spring-boot-http2/">http/2 with undertow</a></p>
+<h2>如何完整實作整個範例</h2>
+<p>全部原始碼可在<a href="https://github.com/genchilu/java-spring-boot-practice/tree/master/http2Practice">這裡</a>下載</p>
+<h2>build with gradle</h2>
+<p>首先需要設定好 build.gradle</p>
+
+<figure class="figure-code code"><div class="highlight"><pre>buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'gs-spring-boot'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web:1.3.5.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-jetty:1.3.5.RELEASE")
+    compile("org.eclipse.jetty.http2:http2-server:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-alpn-server:9.3.10.v20160621")
+    //compile("org.springframework.boot:spring-boot-starter-undertow:1.3.5.RELEASE")
+    compile("org.mortbay.jetty.alpn:alpn-boot:8.1.8.v20160420")
+
+    //因應 buildscript 下列 model 要指定版本
+    compile("org.eclipse.jetty:jetty-http:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-io:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-jndi:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-plus:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-security:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-server:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-annotations:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-continuation:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-servlet:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-servlets:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-util:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-webapp:9.3.10.v20160621")
+    compile("org.eclipse.jetty:jetty-xml:9.3.10.v20160621")
+    compile("org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.10.v20160621")
+    compile("org.eclipse.jetty.websocket:javax-websocket-server-impl:9.3.10.v20160621")
+    compile("org.eclipse.jetty.websocket:websocket-api:9.3.10.v20160621")
+    compile("org.eclipse.jetty.websocket:websocket-client:9.3.10.v20160621")
+    compile("org.eclipse.jetty.websocket:websocket-common:9.3.10.v20160621")
+    compile("org.eclipse.jetty.websocket:websocket-server:9.3.10.v20160621")
+    compile("org.eclipse.jetty.websocket:websocket-servlet:9.3.10.v20160621")
+
+
+    //lib for http2 client
+    //compile("org.springframework:spring-web:4.3.0.RELEASE")
+    //compile("org.springframework:spring-core:4.3.0.RELEASE")
+    //compile("com.squareup.okhttp3:okhttp:3.3.1")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
+</pre></div>
+</figure>
+<h2>一個簡單 Spring Boot 網站入口</h2>
+<p>撰寫一個 Application.class</p>
+
+<figure class="figure-code code"><div class="highlight"><pre>@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class);
+    }
+</pre></div>
+</figure>
+<h2>實作一個可支援 http/2 的 EmbeddedServletContainerCustomizer</h2>
+<p>撰寫 JettyHttp2Customizer.class</p>
+
+<figure class="figure-code code"><div class="highlight"><pre>@Component
+public class JettyHttp2Customizer implements EmbeddedServletContainerCustomizer {
+
+    private final ServerProperties serverProperties;
+
+    @Autowired
+    public JettyHttp2Customizer(ServerProperties serverProperties) {
+        this.serverProperties = serverProperties;
+    }
+
+    @Override
+    public void customize(ConfigurableEmbeddedServletContainer container) {
+        JettyEmbeddedServletContainerFactory factory = (JettyEmbeddedServletContainerFactory) container;
+
+        factory.addServerCustomizers(new JettyServerCustomizer() {
+            @Override
+            public void customize(Server server) {
+                if (serverProperties.getSsl() != null &amp;&amp; serverProperties.getSsl().isEnabled()) {
+                    ServerConnector connector = (ServerConnector) server.getConnectors()[0];
+                    int port = connector.getPort();
+                    SslContextFactory sslContextFactory = connector
+                            .getConnectionFactory(SslConnectionFactory.class).getSslContextFactory();
+                    HttpConfiguration httpConfiguration = connector
+                            .getConnectionFactory(HttpConnectionFactory.class).getHttpConfiguration();
+
+                    configureSslContextFactory(sslContextFactory);
+                    ConnectionFactory[] connectionFactories = createConnectionFactories(sslContextFactory, httpConfiguration);
+
+                    ServerConnector serverConnector = new ServerConnector(server, connectionFactories);
+                    serverConnector.setPort(port);
+                    // override existing connectors with new ones
+                    server.setConnectors(new Connector[]{serverConnector});
+                }
+            }
+
+            private void configureSslContextFactory(SslContextFactory sslContextFactory) {
+                sslContextFactory.setCipherComparator(HTTP2Cipher.COMPARATOR);
+                sslContextFactory.setUseCipherSuitesOrder(true);
+            }
+
+            private ConnectionFactory[] createConnectionFactories(SslContextFactory sslContextFactory,
+                                                                  HttpConfiguration httpConfiguration) {
+                SslConnectionFactory sslConnectionFactory = new SslConnectionFactory(sslContextFactory, "alpn");
+                ALPNServerConnectionFactory alpnServerConnectionFactory =
+                        new ALPNServerConnectionFactory("h2", "h2-17", "h2-16", "h2-15", "h2-14");
+
+                HTTP2ServerConnectionFactory http2ServerConnectionFactory =
+                        new HTTP2ServerConnectionFactory(httpConfiguration);
+
+                return new ConnectionFactory[]{sslConnectionFactory, alpnServerConnectionFactory,
+                        http2ServerConnectionFactory};
+            }
+        });
+    }
+}
+</pre></div>
+</figure>
+<h2>設定 SSL</h2>
+<p>雖然 http/2 沒規定一定要加密協定（例如 SSL），但目前大部分瀏覽器的 http/2 都需要跑在 https 上面。</p>
+<h3>產生認證</h3>
+<p>進入專案家目錄底下輸入</p>
+
+<figure class="figure-code code"><div class="highlight"><pre>Enter keystore password:  
+Re-enter new password:
+What is your first and last name?
+  [Unknown]:  
+What is the name of your organizational unit?
+  [Unknown]:  
+What is the name of your organization?
+  [Unknown]:  
+What is the name of your City or Locality?
+  [Unknown]:  
+What is the name of your State or Province?
+  [Unknown]:  
+What is the two-letter country code for this unit?
+  [Unknown]:  
+Is CN=Unknown, OU=Unknown, O=Unknown, L=Unknown, ST=Unknown, C=Unknown correct?
+
+
+</pre></div>
+</figure>
+
+<p>會產一個認證檔名為：keystore.p12</p>
+<h3>設定 Spring Boot</h3>
+<p>修改 application.properties 如下</p>
+
+<figure class="figure-code code"><div class="highlight"><pre>server.port = 8443
+server.ssl.enable = true
+server.ssl.key-store = keystore.p12
+server.ssl.key-store-password = mypassword
+server.ssl.keyStoreType = PKCS12
+server.ssl.keyAlias = tomcat
+</pre></div>
+</figure>
+
+<p>至此你的 Spring Boot 網站已可以支援 SSL 連線。</p>
+<h2>修改 jvm 啟動參數</h2>
+<p>加入下面啟動參數</p>
+
+<figure class="figure-code code"><div class="highlight"><pre>java -jar -Xbootclasspath/p:${USER_HOME_DIR}/.gradle/caches/modules-2/files-2.1/org.mortbay.jetty.alpn/alpn-boot/8.1.8y.v20160420/a6414838c42ddfa1110ecfac50a9906e330940fc/alpn-boot-8.1.8.v20160420.jar web.jar
+</pre></div>
+</figure>
+
+<p>這時候啟動你的 web，一個支援 http/2 的網站就完成了。</p>
+<h2>來驗證吧</h2>
+<p>先在瀏覽器上安裝 "http 2 and spdy indicator" （ chrome 和 firefox 都有這套件）。<br>
+開啟頁面 <a href="http://localhost:8443/" rel="nofollow" target="_blank">http://localhost:8443</a>，<br>
+如果在瀏覽器右上角看到閃電亮起來如下圖，就代表成功啦！<br>
+</p><figure><img src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/GRoTrZqQr20hWUNVLMf4_http2indicator.png" title=""></figure><br>
+如果在瀏覽器右上角看到閃電亮起來，就代表成功啦！<p></p>
+<h2>http/2 的 Request and Response Multiplexing 和 server push 功能測試</h2>
+<p>http/2 在 TCP/IP 四層中的 Application 層中多塞了一層 Binnary Framing Layer，而這機制也改變了 server 和 client 交換資料的方式：</p>
+<h3>Request and Response Multiplexing</h3>
+<p>有別於 http/1.x 中一個 request 就佔據一個 connection，http/2 中一個 connection 可以同時提供給多個 request 和 response 交錯傳輸資料。為了更直觀了解這特色，先寫個簡單的 index.html，開場就先跟 server 發出 20 個影像檔請求：</p>
+
+<figure class="figure-code code"><div class="highlight"><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;img src="1.jpeg"&gt;
+    &lt;img src="2.jpeg"&gt;
+    &lt;img src="3.jpeg"&gt;
+    &lt;img src="4.jpeg"&gt;
+    &lt;img src="5.jpeg"&gt;
+    &lt;img src="6.jpeg"&gt;
+    &lt;img src="7.jpeg"&gt;
+    &lt;img src="8.jpeg"&gt;
+    &lt;img src="9.jpeg"&gt;
+    &lt;img src="10.jpeg"&gt;
+    &lt;img src="11.jpeg"&gt;
+    &lt;img src="12.jpeg"&gt;
+    &lt;img src="13.jpeg"&gt;
+    &lt;img src="14.jpeg"&gt;
+    &lt;img src="15.jpeg"&gt;
+    &lt;img src="16.jpeg"&gt;
+    &lt;img src="17.jpeg"&gt;
+    &lt;img src="18.jpeg"&gt;
+    &lt;img src="19.jpeg"&gt;
+    &lt;img src="20.jpeg"&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</figure>
+
+<p>若是用 http/1.x ，在 chrome 的開發者工具中可以看到 browser 跟 server 請求資源的時間序如下圖：<br>
+</p><figure><img src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/8Iy7VlMPR8eoY6NxAPKj_http1x.png" title=""></figure><br>
+可以看到整個頁面耗時 884ms，其中 image 的請求不是同時發給 server，而是有先後順序；這是因為 chrome 預設對同一個 web server 同時只能發出六個請求。<p></p>
+
+<p>而當使用 http/2 以後，變成一次同時發出全部請求：<br>
+</p><figure><img src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/tQwFXTS6Q52zrdqsdGsJ_http2.png" title=""></figure><br>
+而耗時降到 450ms 以下。<p></p>
+
+<p>更棒的是只要你修改設定讓網站支援 http/2，而不用修改到任何程式碼。</p>
+<h3>測試 server push</h3>
+<p>也由於 Binary framing Layer，http/2 也打破了以往一個 request 對應一個 response 的模式，可以一個 request對應多個 respnse。這就是 server push，允許由 server 主動 push 。<br>
+可用來指定某些資源在頁面讀取前先 push 到 client 端 。<br>
+實作上很簡單，下面是一個簡單的 範例，利用 filter 抓取連到 index.html 的請求，透過 jettyRequest push 資源給 client 端。</p>
+<h4>ServerPushFilter.class</h4>
+<figure class="figure-code code"><div class="highlight"><pre>@WebFilter(filterName = "serverPushFilter", urlPatterns = "/index.html")
+public class ServerPushFilter implements Filter {
+    Logger logger = Logger.getLogger(ServerPushFilter.class);
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        Request jettyRequest = (Request) request;
+        if (jettyRequest.isPushSupported()) {
+            logger.info("server push");
+            for(int i=1;i&lt;20;i++) {
+                jettyRequest.getPushBuilder()
+                        .path("/" + Integer.toString(i) + ".jpeg")
+                        .push();
+            }
+        } else {
+            logger.info("non http2");
+        }
+        chain.doFilter(request, response);
+    }
+    public void destroy() {
+
+    }
+}
+</pre></div>
+</figure>
+
+<p>再使用開發者工具看一下這次發出請求的狀況:<br>
+</p><figure><img src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/dngXtmZTAaMtY53n0Btg_serverpush.png" title=""></figure><br>
+可以看到雖然整個耗時約略相等，但在 index.html 載入完以後，每張圖片的載入時間都在 16ms 上下；相對 Request and Response Multiplexing 每個影像檔資源耗時約在 30ms 左右。<p></p>
+<h2>http/2 其他特色</h2>
+<p>其他諸如 Stream Prioritization、Flow Control 等，但目前還查不到如和實作，有機會再分享。</p>
+<h2>結論</h2>
+<p>本文簡介了如何讓 Spring Boot 架的網站支援 http/2，而不用透過 nginx 或 apache 這樣的 web server，希望能對大家有幫助。</p>
+
+
+              <div class="article-navigation">
+                
+                  <a href="http://genchilu-blog.logdown.com/posts/745182" class="article-prev">
+                    ← 用 Spring Boot 實作預防暴力登入嘗試的機制
+                  </a>
+                
+
+                
+              </div>
+
+              <div class="social-share group">
+                <div class="pull-right">
+                  
+                  <div class="fb-like fb_iframe_widget" data-href="http://genchilu-blog.logdown.com/posts/746243" data-layout="button_count" data-send="false" data-show-faces="false" data-width="90" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=146125455579724&amp;container_width=0&amp;href=http%3A%2F%2Fgenchilu-blog.logdown.com%2Fposts%2F746243&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;send=false&amp;show_faces=false&amp;width=90"><span style="vertical-align: bottom; width: 81px; height: 20px;"><iframe name="f1dce30eee1a4a8" width="90px" height="1000px" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:like Facebook Social Plugin" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/like.html" style="border: none; visibility: visible; width: 81px; height: 20px;" class=""></iframe></span></div>
+                  
+                </div>
+
+                <a href="http://genchilu-blog.logdown.com/posts/746243#" style="dispaly:none; border-bottom:none;">&nbsp;</a>
+
+
+                
+                  <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" title="Twitter Tweet Button" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/tweet_button.a9003d9964444592507bbb36b98c709b.en.html" style="position: static; visibility: visible; width: 63px; height: 20px;"></iframe>
+                
+
+                
+                   <div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 90px; height: 20px; background: transparent;"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 90px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 20px;" tabindex="0" vspace="0" width="100%" id="I0_1469938425784" name="I0_1469938425784" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/fastbutton.html" data-gapiattached="true" title="+1"></iframe></div>
+                
+
+              </div>
+            
+
+          </div>
+
+          
+          <div class="tags">
+            <ul class="inline-list">
+              
+                <li>
+                  <i class="icon-tag"></i>
+                  <a href="http://genchilu-blog.logdown.com/tags/java%20Spring%20Boot%20http2%20Request%20and%20Response%20Multiplexing%20server%20server%20push">java Spring Boot http2 Request and Response Multiplexing server server push</a>
+                </li>
+              
+            </ul>
+
+          </div>
+          
+
+          <div class="metadata">
+            <ul class="inline-list">
+              <li>
+<i class="icon-time"></i> July 01, 2016 00:21 </li>
+              <li>
+<i class="icon-link"></i> <a href="http://genchilu-blog.logdown.com/posts/746243"> Permalink </a> </li>
+              
+
+             </ul>
+          </div>
+
+          <div style="clear: both;">&nbsp;</div>
+
+          
+            
+          
+
+
+        </div>
+      
+
+      
+
+
+      
+
+    </div>
+
+    <footer class="footer">
+      <p>
+        <span><i></i>Copyright © 2013 genchilu . </span>  Powered by <a href="http://logdown.com/">Logdown</a>.<br> Based on work at subtlepatterns.com.
+      </p>
+    </footer>
+  </div>
+
+  <script src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/logdown_blog.js"></script>
+  <script>
+    if (window.chrome) {
+      document.querySelector('.header .nav').classList.add('chrome-hack');
+    }
+  </script>
+
+
+<iframe src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/top_controls.html" width="81" height="26" frameborder="0" scrolling="no" style="position: fixed; z-index: 2147483647; border: 0px; background-color: transparent; overflow: hidden; top: 0px; right: 0px;"></iframe>
+
+
+
+
+<div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_http" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_http" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/bz-D0tzmBsw.html" style="border: none;"></iframe><iframe name="fb_xdm_frame_https" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/bz-D0tzmBsw(1).html" style="border: none;"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=146125455579724";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<script type="text/x-mathjax-config;executed=true">
+   MathJax.Hub.Config({
+    extensions: ["jsMath2jax.js"]
+  });
+</script>
+<script src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/MathJax.js"></script>
+
+
+  <script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+
+
+
+
+
+
+<!-- Start Alexa Certify Javascript -->
+<script type="text/javascript">
+_atrk_opts = { atrk_acct:"KOI0g1aYS500G0", domain:"logdown.com",dynamic: true};
+(function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
+</script>
+<noscript>&lt;img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=KOI0g1aYS500G0" style="display:none" height="1" width="1" alt=""&gt;</noscript>
+<!-- End Alexa Certify Javascript -->
+
+
+<iframe name="oauth2relay663885189" id="oauth2relay663885189" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/postmessageRelay.html" tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe><v-div id="vTabsPanelExtension" class="v-tabs-panel v-tabs-panel-right flat-v-theme-StG1Q1" style="zoom: 87.5%;"><v-div class="v-tabs-panel-container"><v-div class="v-tabs-panel-sidebar"><v-div class="v-tabs-menu"><v-div class="v-tabs-menu-btn v-tabs-menu-btn-newtab" title="New tab"></v-div><v-div class="v-tabs-menu-btn v-tabs-menu-btn-tabs" title="Tabs"></v-div><v-div class="v-tabs-menu-btn v-tabs-menu-btn-recent" title="Recent tabs"></v-div><div class="v-tabs-menu-btn v-tabs-menu-btn-settings" title="Settings"></div><div class="v-tabs-menu-btn v-tabs-menu-btn-blank"></div></v-div><v-div class="v-tabs-pinbar"></v-div></v-div><v-div class="v-tabs-panel-activator"></v-div><v-div class="v-tabs-panel-workzone v-tabs-hide" style="width: 200px;"><v-div class="v-tabs-panel-mainzone"><v-div class="v-tabs-panel-mainzone-top"><v-div class="v-tabs-panel-mainzone-top-switcher"></v-div><v-div class="v-tabs-panel-mainzone-top-content v-tabs-hide"><v-div class="v-tabs-panel-search"><v-div class="v-tabs-panel-search-input" contenteditable="true"></v-div><v-div class="v-tabs-icons16-set v-tabs-icons16-search v-tabs-panel-search-icon" title="Esc"></v-div></v-div></v-div></v-div><v-div class="v-tabs-panel-mainzone-middle"><v-div class="v-tabs-list"></v-div></v-div><v-div class="v-tabs-panel-mainzone-bottom v-tabs-hide"></v-div></v-div><v-div class="v-tabs-panel-resizer"></v-div><v-div class="v-tabs-panel-minimizer"></v-div></v-div></v-div></v-div><iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" src="./用 Spring Boot 架構支援 http_2 的網站以及 Request and Response Multiplexing _ Server Push 測試 « genchilu&#39;s Blog_files/saved_resource.html"></iframe><div id="chrome-gestures-helper-field" style="position: fixed; left: 0px; top: 0px; display: block; z-index: 1000000; text-align: left; width: 1145px; height: 638px; border: none; background: transparent;"><style>#chrome-gestures-helper-field *:after {display:none;}</style><svg style="position: absolute;" width="1145" height="638"><polyline stroke="rgba(18,89,199,0.8)" stroke-width="2" fill="none" points="653 273 710 198 698 196 684 196 642 199 514 239 411 283 313 326 242 364 180 406 159 424"></polyline></svg><p style="display:block;background:transparent;position:absolute;top:45%;width:100%;text-align:center;min-height:4em;margin:0px;padding:0px;"><span style="display:inline-block;background:rgba(0,0,0,0.5);margin:10px;padding:10px;"><img src="chrome-extension://jpkfjicglakibpenojifdiepckckakgk/down.png"><img src="chrome-extension://jpkfjicglakibpenojifdiepckckakgk/up.png"><img src="chrome-extension://jpkfjicglakibpenojifdiepckckakgk/left.png"></span><br><span style="font-size: large; font-weight: bold; color: white; display: none; margin: 0px; padding: 10px; background: rgba(0, 0, 0, 0.498039);">open new tab</span></p></div></body></html>
