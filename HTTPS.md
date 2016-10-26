@@ -260,3 +260,190 @@ private Connector createHttpConnector() {
     return connector;
 }
 ```
+
+---
+
+nginx 对一个端口同时支持 http 和 https
+<https://www.web-tinker.com/article/21227.html>
+浏览器默认对 http 和 https 使用不同的端口，所以一般省略端口的 Web 服务器可以在 80 和 443 上分别开服务。但有些基于端口的 Web 服务怎么办呢？如果开多个端口，用户可能需要自己去记住端口对应的 scheme。为什么不试试把 http 和 https 都在同一个端口上实现呢？
+　　TLS 也是基于 TCP，当服务器建立 TCP 连接后，可以根据收到的第一份数据来判断到底客户端是希望建立 TLS 还是直接就发了一个 http 请求过来。nginx 就做了这件事（代码），它会判断 TCP 请求建立后接收到的首个字节是什么。如果是 0x80 或 0x16 就可能是 SSL 或 TLS，可以尝试进行 https 握手。
+
+node如何让一个端口同时支持https与http
+<http://www.cnblogs.com/dojo-lzz/p/5479870.html?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io>
+让同一个端口或地址既支持http协议又支持https协议，这时候我们该怎么办，有的同学很可能想到用nginx做反向代理，这不失为一个解决方案，但这也同样意味着增加了产品的复杂度，用户并不想去折腾ngnix。
+HTTP与HTTPS都属于应用层协议，所以只要我们在底层协议中进行反向代理，就可以解决这个问题! 刚好node可以让我们很方便的创建一个tcp服务器！
+
+总结:
+HTTPS和HTTP是应用层的,是以ip+端口传递数据的,要实现通个端口实现两种协议,需要在TCP层进行转发处理.
+nginx已经实现,或者自己基于TCP实现
+
+```node
+var net = require('net');
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+
+var httpPort = 3345;
+var httpsPort = 3346;
+
+var server = http.createServer(function(req, res){
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('hello world!');
+}).listen(httpPort);
+
+var options = {
+  key: fs.readFileSync('./cakey.pem'),
+  cert: fs.readFileSync('./cacert.pem')
+};
+
+var sserver = https.createServer(options, function(req, res){
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('secured hello world');
+}).listen(httpsPort);
+
+net.createServer(function(socket){
+    socket.once('data', function(buf){
+        console.log(buf[0]);
+        // https数据流的第一位是十六进制“16”，转换成十进制就是22
+        var address = buf[0] === 22 ? httpsPort : httpPort;
+        //创建一个指向https或http服务器的链接
+        var proxy = net.createConnection(address, function() {
+            proxy.write(buf);
+            //反向代理的过程，tcp接受的数据交给代理链接，代理链接服务器端返回数据交由socket返回给客户端
+            socket.pipe(proxy).pipe(socket);
+        });
+        
+        
+        proxy.on('error', function(err) {
+            console.log(err);
+        });
+    });
+    
+    socket.on('error', function(err) {
+        console.log(err);
+    });
+}).listen(3344);
+```
+
+---
+
+#### 关于证书
+
+java用的存储密钥的容器。可以同时容纳n个公钥或私钥，后缀一般是.jks或者.keystore或.truststore等
+
+####  证书,jks、pfx和cer后缀都是什么文件
+<http://blog.csdn.net/baidu_18607183/article/details/51565240>
+jks是JAVA的keytools证书工具支持的证书私钥格式。
+pfx是微软支持的私钥格式。
+
+cer是证书的公钥。
+
+如果是你私人要备份证书的话记得一定要备份成jks或者pfx格式，否则恢复不了。
+
+简单来说，cer就是你们家邮箱的地址，你可以把这个地址给很多人让他们往里面发信。
+pfx或jks就是你家邮箱的钥匙，别人有了这个就可以冒充你去你家邮箱看信，你丢了这个也没法开邮箱了。
+
+#### What's the difference between a .jks and a .cer certificate file? Is it possible to convert from one to the other?
+<https://www.quora.com/Whats-the-difference-between-a-jks-and-a-cer-certificate-file-Is-it-possible-to-convert-from-one-to-the-other>
+JKS - Java key store.  Its java way of storing the relevant information. 
+.CER - Certificate file i.e. public ckey. 
+You can convert from CER to JKS   as you are only converting the public key. Both command line tools and API will allow you do that. 
+I don't believe you can access the private key from JKS file even with password ( for the purpose of exporting). I could be wrong.  A while ago I ran into issues of converting and ended up using P12 format as I was able to use the same P12 file from both Java and .NET and can even use OpenSSL tools. 
+If you are looking for platform independent way to use Asymmetric key, P12 is your best choice.  You can import them into any tool/platform without any issue and use native API to extract the public key (.CER).
+
+#### ssl证书生成：cer&jks文件生成摘录 (命令)
+<http://www.cnblogs.com/xiaowenchao/p/3218055.html>
+
+#### TLS、SSL、HTTPS以及证书
+<http://www.cnblogs.com/kyrios/p/tls-and-certificates.html>
+TLS是传输层安全协议（Transport Layer Security）的缩写，是一种对基于网络的传输的加密协议，可以在受信任的第三方公证基础上做双方的身份认证。TLS可以用在TCP上，也可以用在无连接的UDP报文上。协议规定了身份认证、算法协商、密钥交换等的实现。
+SSL是TLS的前身，现在已不再更新
+HTTPS是在基于TLS/SSL的安全套接字上的的应用层协议，除了传输层进行了加密外，其它与常规HTTP协议基本保持一致
+证书是TLS协议中用来对身份进行验证的机制，是一种数字签名形式的文件，包含证书拥有者的公钥及第三方的证书信息。
+证书分为2类：自签名证书和CA证书。一般自签名证书不能用来进行身份认证，如果一个server端使用自签名证书，client端要么被设置为无条件信任任何证书，要么需要将自签名证书的公钥和私钥加入受信任列表。但这样一来就增加了server的私钥泄露风险。
+
+TLS基于CA的身份认证基本原理是：首先验证方需要信任CA提供方自己的证书(CAcert)，比如证书在操作系统的受信任证书列表中，或者用户通过“安装根证书”等方式将 CA的公钥和私钥加入受信任列表；然后CA对被验证方的原始证书进行签名（私钥加密），生成最终的证书；验证方得到最终的证书后，利用CAcert中包含的公钥进行解密，得到被验证方的原始证书。
+
+根据RSA的加密原理，如果用CA的公钥解密成功，说明该证书的确是用CA的私钥加密的，可以认为被验证方是可信的。
+
+
+花钱购买证书机构的签名
+利用上述方法，受信任的机构就可以用自己的私钥(sign.key)对其他人的证书进行签名。我们看到，只需要把证书请求(ssl.csr)发给证书机构，证书机构就可以生成出签名过的证书(ssl.crt)
+
+---
+#### JDK中keytool常用命令
+<http://www.cnblogs.com/kungfupanda/archive/2010/09/01/1815047.html>
+
+#### Linux使用curl访问https站点时报错汇总
+<http://www.linuxde.net/2014/12/15619.html>
+
+java和php都可以编程来访问https网站。例如httpclient等。
+
+其调用的CA根证书库并不和操作系统一致。
+
+JAVA的CA根证书库是在 JRE的$JAVA_HOME/jre/lib/security/cacerts，该文件会随着JRE版本的升级而升级。可以使用keytool工具进行管理。
+
+
+#### 将安全证书导入到java的cacerts证书库
+<http://blog.csdn.net/wangjunjun2008/article/details/37662851>
+
+#### 代码加载证书
+<http://blog.chenxiaosheng.com/posts/2013-12-26/java-use-self_signed_certificate.html>
+
+```java
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.security.KeyStore;
+
+
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.net.URL;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+
+public class LoadCert {
+    public static void main(String[] args) throws Exception {
+
+        X509TrustManager sunJSSEX509TrustManager;
+        // 加载 Keytool 生成的证书文件
+        char[] passphrase;
+        String p = "changeit";
+        passphrase = p.toCharArray();
+        File file = new File("java.cnnic.cacert");
+        System.out.println("Loading KeyStore " + file + "...");
+        InputStream in = new FileInputStream(file);
+        KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+        ks.load(in, passphrase);
+        in.close();
+        // 构造 javax.net.ssl.TrustManager 对象
+        TrustManagerFactory tmf =
+        TrustManagerFactory.getInstance("SunX509", "SunJSSE");
+        tmf.init(ks);
+        TrustManager tms [] = tmf.getTrustManagers();
+        // 使用构造好的 TrustManager 访问相应的 https 站点
+        SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+        sslContext.init(null, tms, new java.security.SecureRandom());
+        SSLSocketFactory ssf = sslContext.getSocketFactory();
+        URL myURL = new URL("https://replace.to.your.site.real.url/");
+        HttpsURLConnection httpsConn = (HttpsURLConnection) myURL.openConnection();
+        httpsConn.setSSLSocketFactory(ssf);
+        InputStreamReader insr = new InputStreamReader(httpsConn.getInputStream());
+        int respInt = insr.read();
+        while (respInt != -1) {
+            System.out.print((char) respInt);
+            respInt = insr.read();
+        }
+    }
+}
+```
+
+`keytool -import -trustcacerts -alias casserver -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -file F:\code\deploy\cer\cas.oa.vipshop.com.cer -storepass changeit`
+
+
