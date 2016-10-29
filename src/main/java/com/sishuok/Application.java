@@ -1,19 +1,22 @@
 package com.sishuok;
 
-import org.apache.catalina.connector.Connector;
+import org.eclipse.jetty.security.ConstraintMapping;
+import org.eclipse.jetty.security.ConstraintSecurityHandler;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.util.security.Constraint;
+import org.eclipse.jetty.webapp.AbstractConfiguration;
+import org.eclipse.jetty.webapp.WebAppContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * <p>User: Zhang Kaitao
- * <p>Date: 13-12-22
- * <p>Version: 1.0
- */
+
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
@@ -35,6 +38,7 @@ public class Application {
      **/
 
 
+    /** tomcat http强制转发到https */
     /*@Bean
     public EmbeddedServletContainerFactory servletContainer() {
 
@@ -65,18 +69,100 @@ public class Application {
         //一定要转发??不能直接支持??
         return connector;
     }*/
-    @Bean
+
+    /** tomcat https 和 https 兼容 */
+    /*@Bean
     public EmbeddedServletContainerFactory servletContainer() {
         TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
         tomcat.addAdditionalTomcatConnectors(createHttpConnector());
         return tomcat;
     }
-
     private Connector createHttpConnector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setScheme("http");
         connector.setPort(8080);
         connector.setSecure(false);
         return connector;
+    }*/
+
+    /**  Jetty Https */
+  /* @Bean
+   public EmbeddedServletContainerFactory embeddedServletContainerFactory() throws Exception {
+       return new JettyEmbeddedServletContainerFactory() {
+           @Override
+           protected JettyEmbeddedServletContainer getJettyEmbeddedServletContainer(
+                   Server server) {
+
+               SslContextFactory sslContextFactory = new SslContextFactory();
+               sslContextFactory.setKeyStorePath("/usr/local/keystore");
+               sslContextFactory.setKeyStorePassword("password");
+               sslContextFactory.setCertAlias("alias");
+
+               SslSocketConnector sslConnector = new SslSocketConnector(sslContextFactory);
+               sslConnector.setPort(8443);
+               server.setConnectors(new Connector[] { sslConnector });
+               return super.getJettyEmbeddedServletContainer(server);
+           }
+       };
+   }*/
+
+    /**
+     * Jetty Http
+     */
+   /* @Bean
+    public EmbeddedServletContainerFactory embeddedServletContainerFactory() throws Exception {
+        return new JettyEmbeddedServletContainerFactory() {
+            @Override
+            protected JettyEmbeddedServletContainer getJettyEmbeddedServletContainer(
+                    Server server) {
+
+                ServerConnector connector = new ServerConnector(server);
+                connector.setPort(8080);
+                server.addConnector(connector);
+
+                return super.getJettyEmbeddedServletContainer(server);
+            }
+        };
     }
+*/
+
+    /**
+     * Jetty redirect http to https
+     * <a href= 'http://stackoverflow.com/questions/26655875/spring-boot-redirect-http-to-https'>@link</a>
+     */
+    @Bean
+    public EmbeddedServletContainerCustomizer servletContainerCustomizer() {
+        return container -> {
+            JettyEmbeddedServletContainerFactory containerFactory = (JettyEmbeddedServletContainerFactory) container;
+            //Add a plain HTTP connector and a WebAppContext config to force redirect from http->https
+            containerFactory.addConfigurations(new AbstractConfiguration() {
+                @Override
+                public void configure(WebAppContext context) throws Exception {
+                    Constraint constraint = new Constraint();
+                    constraint.setDataConstraint(2);
+
+                    ConstraintMapping constraintMapping = new ConstraintMapping();
+                    constraintMapping.setPathSpec("/*");
+                    constraintMapping.setConstraint(constraint);
+
+                    ConstraintSecurityHandler constraintSecurityHandler = new ConstraintSecurityHandler();
+                    constraintSecurityHandler.addConstraintMapping(constraintMapping);
+                    context.setSecurityHandler(constraintSecurityHandler);
+                }
+            });
+
+            containerFactory.addServerCustomizers(server -> {
+                HttpConfiguration http = new HttpConfiguration();
+                http.setSecurePort(8443);
+                http.setSecureScheme("https");
+
+                ServerConnector connector = new ServerConnector(server);
+                connector.addConnectionFactory(new HttpConnectionFactory(http));
+                connector.setPort(8080);
+
+                server.addConnector(connector);
+            });
+        };
+    }
+
 }

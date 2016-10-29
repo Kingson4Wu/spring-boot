@@ -446,4 +446,63 @@ public class LoadCert {
 
 `keytool -import -trustcacerts -alias casserver -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -file F:\code\deploy\cer\cas.oa.vipshop.com.cer -storepass changeit`
 
+---
+curl -ki https://localhost:8443/user/1
+-k/--insecure	允许不使用证书到SSL站点
+
+curl会通过服务器的证书来证明服务器声明的身份，如果验证失败curl将拒绝和这个服务器连接，
+可以使用参数--insecure(-k)忽略服务器不能被验证。
+
+<pre>
+curl  https://localhost:8443/user/1
+curl: (60) SSL certificate problem: Invalid certificate chain
+More details here: http://curl.haxx.se/docs/sslcerts.html
+
+curl performs SSL certificate verification by default, using a "bundle"
+ of Certificate Authority (CA) public keys (CA certs). If the default
+ bundle file isn't adequate, you can specify an alternate file
+ using the --cacert option.
+If this HTTPS server uses a certificate signed by a CA represented in
+ the bundle, the certificate verification probably failed due to a
+ problem with the certificate (it might be expired, or the name might
+ not match the domain name in the URL).
+If you'd like to turn off curl's verification of the certificate, use
+ the -k (or --insecure) option.
+</pre>
+
+<pre>
+curl -ki https://localhost:8443/user/1
+HTTP/1.1 200 OK
+Server: Apache-Coyote/1.1
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 15:05:51 GMT
+
+{"id":1,"name":"zhang"}%
+</pre>
+
+curl https://www.baidu.com/
+则不会有证书问题
+
+<pre>
+curl -i https://www.baidu.com/
+HTTP/1.1 200 OK
+Server: bfe/1.0.8.18
+Date: Thu, 27 Oct 2016 15:06:22 GMT
+Content-Type: text/html
+Content-Length: 2443
+Connection: keep-alive
+Last-Modified: Mon, 25 Jul 2016 11:13:23 GMT
+ETag: "5795f453-98b"
+Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform
+Pragma: no-cache
+Set-Cookie: BDORZ=27315; max-age=86400; domain=.baidu.com; path=/
+Accept-Ranges: bytes
+Set-Cookie: __bsi=11833468724267330491_00_282_N_N_2_0303_C027_N_N_N_0; expires=Thu, 27-Oct-16 15:06:27 GMT; domain=www.baidu.com; path=/
+
+<!DOCTYPE html>
+<!--STATUS OK--><html> <head><meta htt...
+</pre>
+
+HTTPS 本来就是基于http
 
