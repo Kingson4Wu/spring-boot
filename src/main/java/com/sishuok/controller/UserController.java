@@ -1,6 +1,7 @@
 package com.sishuok.controller;
 
 import com.sishuok.entity.User;
+import org.eclipse.jetty.server.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -113,5 +114,26 @@ public class UserController {
 
         return "HTTP/1.1 : " + http11Response.contains("You are using HTTP/2 right now!") + "<br/>" +
                 "HTTP/2 : " + http2Response.contains("You are using HTTP/2 right now!");
+    }
+
+    @RequestMapping("/http2push/{enable}")
+    String http2push(HttpServletRequest request, @PathVariable("enable") String enable) {
+
+        Request jettyRequest = (Request) request;
+        if ("true".equals(enable) && jettyRequest.isPushSupported()) {
+            logger.info("server push");
+            jettyRequest.getPushBuilder()
+                    .path("/sunway.jpg")
+                    .push();
+        }
+        return "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <img src=\"https://localhost:8443/sunway.jpg\">\n" +
+                "</body>\n" +
+                "</html>";
+
     }
 }  

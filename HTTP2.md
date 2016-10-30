@@ -14,6 +14,15 @@ HTTP2.0的前世今生
 HTTP2.0 支持明文 HTTP 传输，而 SPDY 强制使用 HTTPS
 HTTP2.0 消息头的压缩算法采用 HPACK，而非 SPDY 采用的 DEFLATE
 
+
+<http://genchilu-blog.logdown.com/posts/746243>
+http/2 的 Request and Response Multiplexing 和 server push 功能測試
+http/2 在 TCP/IP 四層中的 Application 層中多塞了一層 Binnary Framing Layer，而這機制也改變了 server 和 client 交換資料的方式：
+
+Request and Response Multiplexing
+server push
+
+
 #### Mac OS Curl HTTP/2 支持
 ` brew install curl --with-nghttp2`
 
@@ -28,5 +37,7 @@ content-length: 23
 
 linux:<https://www.sysgeek.cn/curl-with-http2-support/>
 
+#### HTTP2 资料
+<https://imququ.com/post/http2-resource.html>
 
 
