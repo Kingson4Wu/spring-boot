@@ -4,9 +4,11 @@ import com.sishuok.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
@@ -98,5 +100,18 @@ public class UserController {
 
 
         return "success";
+    }
+
+
+    @RequestMapping("/http2Test")
+    String http2Test() {
+        RestTemplate http2Template = new RestTemplate(new OkHttp3ClientHttpRequestFactory());
+        RestTemplate http11Template = new RestTemplate();
+
+        String http11Response = http11Template.getForObject("https://127.0.0.1:8443/user/1", String.class);
+        String http2Response = http2Template.getForObject("https://127.0.0.1:8443/user/1", String.class);
+
+        return "HTTP/1.1 : " + http11Response.contains("You are using HTTP/2 right now!") + "<br/>" +
+                "HTTP/2 : " + http2Response.contains("You are using HTTP/2 right now!");
     }
 }  

@@ -28,10 +28,10 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
                 <!-- 不使用tomcat 使用其他容器-->
-                <exclusion>
+               <!-- <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
+                </exclusion>-->
             </exclusions>
         </dependency>
         <dependency>
@@ -42,6 +42,24 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.jetty.http2/http2-server -->
+        <dependency>
+            <groupId>org.eclipse.jetty.http2</groupId>
+            <artifactId>http2-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-alpn-server -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-alpn-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mortbay.jetty.alpn/alpn-boot -->
+        <dependency>
+            <groupId>org.mortbay.jetty.alpn</groupId>
+            <artifactId>alpn-boot</artifactId>
+            <version>8.1.8.v20160420</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
@@ -56,7 +74,8 @@
         <jdk.version>1.8</jdk.version>
         <!--<tomcat.version>8.0.3</tomcat.version>-->
         <servlet-api.version>3.1.0</servlet-api.version>
-        <!--<jetty.version>9.1.0.v20131115</jetty.version>-->
+        <!--http://genchilu-blog.logdown.com/posts/746243 开启https2使用指定的版本才不会报错 -->
+       <jetty.version>9.3.10.v20160621</jetty.version>
     </properties>
 
 
@@ -95,6 +114,16 @@
             <url>http://repo.spring.io/milestone</url>
             <snapshots><enabled>true</enabled></snapshots>
         </repository>
+       <!-- <repository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>http://maven.oschina.net/content/groups/public/</url>
+            &lt;!&ndash;<url>http://central.maven.org/maven2/</url>&ndash;&gt;
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>-->
     </repositories>
     <pluginRepositories>
         <pluginRepository>

@@ -1,17 +1,15 @@
 package com.sishuok;
 
-import org.eclipse.jetty.security.ConstraintMapping;
-import org.eclipse.jetty.security.ConstraintSecurityHandler;
-import org.eclipse.jetty.server.HttpConfiguration;
-import org.eclipse.jetty.server.HttpConnectionFactory;
-import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.util.security.Constraint;
-import org.eclipse.jetty.webapp.AbstractConfiguration;
-import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.alpn.server.ALPNServerConnectionFactory;
+import org.eclipse.jetty.http2.HTTP2Cipher;
+import org.eclipse.jetty.http2.server.HTTP2ServerConnectionFactory;
+import org.eclipse.jetty.server.*;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.jetty.JettyServerCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -130,7 +128,7 @@ public class Application {
      * Jetty redirect http to https
      * <a href= 'http://stackoverflow.com/questions/26655875/spring-boot-redirect-http-to-https'>@link</a>
      */
-    @Bean
+    /*@Bean
     public EmbeddedServletContainerCustomizer servletContainerCustomizer() {
         return container -> {
             JettyEmbeddedServletContainerFactory containerFactory = (JettyEmbeddedServletContainerFactory) container;
@@ -142,7 +140,7 @@ public class Application {
                     constraint.setDataConstraint(2);
 
                     ConstraintMapping constraintMapping = new ConstraintMapping();
-                    constraintMapping.setPathSpec("/*");
+                    constraintMapping.setPathSpec("*//*");
                     constraintMapping.setConstraint(constraint);
 
                     ConstraintSecurityHandler constraintSecurityHandler = new ConstraintSecurityHandler();
@@ -161,6 +159,57 @@ public class Application {
                 connector.setPort(8080);
 
                 server.addConnector(connector);
+            });
+        };
+    }*/
+
+
+    /** jetty http2 */
+    /** vm options : -Xbootclasspath/p:/Users/kingsonwu/.m2/repository/org/mortbay/jetty/alpn/alpn-boot/8.1.9.v20160720/alpn-boot-8.1.9.v20160720.jar */
+    /** /usr/local/Cellar/curl/7.50.3/bin/curl --http2 -kI  https://localhost:8443/user/1 */
+    @Bean
+    public EmbeddedServletContainerCustomizer http2ServletContainerCustomizer() {
+        return container -> {
+            JettyEmbeddedServletContainerFactory factory = (JettyEmbeddedServletContainerFactory) container;
+
+            factory.addServerCustomizers(new JettyServerCustomizer() {
+                @Override
+                public void customize(Server server) {
+                    //if (serverProperties.getSsl() != null && serverProperties.getSsl().isEnabled()) {
+                        ServerConnector connector = (ServerConnector) server.getConnectors()[0];
+                        int port = connector.getPort();
+                        SslContextFactory sslContextFactory = connector
+                                .getConnectionFactory(SslConnectionFactory.class).getSslContextFactory();
+                        HttpConfiguration httpConfiguration = connector
+                                .getConnectionFactory(HttpConnectionFactory.class).getHttpConfiguration();
+
+                        configureSslContextFactory(sslContextFactory);
+                        ConnectionFactory[] connectionFactories = createConnectionFactories(sslContextFactory, httpConfiguration);
+
+                        ServerConnector serverConnector = new ServerConnector(server, connectionFactories);
+                        serverConnector.setPort(port);
+                        // override existing connectors with new ones
+                        server.setConnectors(new Connector[]{serverConnector});
+                  // }
+                }
+
+                private void configureSslContextFactory(SslContextFactory sslContextFactory) {
+                    sslContextFactory.setCipherComparator(HTTP2Cipher.COMPARATOR);
+                    sslContextFactory.setUseCipherSuitesOrder(true);
+                }
+
+                private ConnectionFactory[] createConnectionFactories(SslContextFactory sslContextFactory,
+                                                                      HttpConfiguration httpConfiguration) {
+                    SslConnectionFactory sslConnectionFactory = new SslConnectionFactory(sslContextFactory, "alpn");
+                    ALPNServerConnectionFactory alpnServerConnectionFactory =
+                            new ALPNServerConnectionFactory("h2", "h2-17", "h2-16", "h2-15", "h2-14");
+
+                    HTTP2ServerConnectionFactory http2ServerConnectionFactory =
+                            new HTTP2ServerConnectionFactory(httpConfiguration);
+
+                    return new ConnectionFactory[]{sslConnectionFactory, alpnServerConnectionFactory,
+                            http2ServerConnectionFactory};
+                }
             });
         };
     }
