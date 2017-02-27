@@ -448,6 +448,10 @@ public class LoadCert {
 
 `keytool -import -trustcacerts -alias casserver -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -file F:\code\deploy\cer\cas.oa.vipshop.com.cer -storepass changeit`
 
+##### HttpClient 设置信任证书(不用手动导入证书)
+<http://blog.csdn.net/shenyunsese/article/details/41075579>
+Utils4Java - httpclient
+
 ---
 curl -ki https://localhost:8443/user/1
 -k/--insecure	允许不使用证书到SSL站点
@@ -507,4 +511,31 @@ Set-Cookie: __bsi=11833468724267330491_00_282_N_N_2_0303_C027_N_N_N_0; expires=T
 </pre>
 
 HTTPS 本来就是基于http
+
+---
+
+Netty SSL性能调优
+<http://weibo.com/ttarticle/p/show?id=2309404017836463922508>
+Java 对SSL的支持
+
+JDK7的client端只支持TLS1.0，服务端则支持TLS1.2。
+
+JDK8完全支持TLS1.2。
+
+JDK7不支持GCM算法。
+
+JDK8支持GCM算法，但性能极差极差极差，按Netty的说法：
+
+ Java 8u60以前多版本，只能处理1 MB/s。
+ Java 8u60 开始，10倍的性能提升，10-20 MB/s。
+ 但比起 OpenSSL的 ~200 MB/s，还差着一个量级。
+1.4 Netty 对SSL的支持
+
+Netty既支持JDK SSL，也支持Google的boringssl， 这是OpenSSL 的一个fork，更少的代码，更多的功能。
+
+依赖netty-tcnative-boringssl-static-linux-x86_64.jar即可，它里面已包含了相关的so文件，再也不用管Linux里装没装OpenSSL，OpenSSL啥版本了。
+
+OpenSSL(boringssl)在我们的测试用例里，比JDK SSL 快10倍，10倍!!! 所以Netty下尽量都要使用OpenSSL。
+
+
 

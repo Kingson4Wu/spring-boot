@@ -1,19 +1,21 @@
 package com.sishuok;
 
-import org.eclipse.jetty.alpn.server.ALPNServerConnectionFactory;
-import org.eclipse.jetty.http2.HTTP2Cipher;
-import org.eclipse.jetty.http2.server.HTTP2ServerConnectionFactory;
-import org.eclipse.jetty.server.*;
-import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.jetty.JettyServerCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+
+/**
+ * http://10.0.0.16:8080/user/object?name=ds&id=2&
+ * 手机和电脑都连同一个wifi访问
+ */
 
 @Configuration
 @ComponentScan
@@ -107,7 +109,7 @@ public class Application {
     /**
      * Jetty Http
      */
-   /* @Bean
+    @Bean
     public EmbeddedServletContainerFactory embeddedServletContainerFactory() throws Exception {
         return new JettyEmbeddedServletContainerFactory() {
             @Override
@@ -122,7 +124,6 @@ public class Application {
             }
         };
     }
-*/
 
     /**
      * Jetty redirect http to https
@@ -167,7 +168,7 @@ public class Application {
     /** jetty http2 */
     /** vm options : -Xbootclasspath/p:/Users/kingsonwu/.m2/repository/org/mortbay/jetty/alpn/alpn-boot/8.1.9.v20160720/alpn-boot-8.1.9.v20160720.jar */
     /** /usr/local/Cellar/curl/7.50.3/bin/curl --http2 -kI  https://localhost:8443/user/1 */
-    @Bean
+    /*@Bean
     public EmbeddedServletContainerCustomizer http2ServletContainerCustomizer() {
         return container -> {
             JettyEmbeddedServletContainerFactory factory = (JettyEmbeddedServletContainerFactory) container;
@@ -212,6 +213,6 @@ public class Application {
                 }
             });
         };
-    }
+    }*/
 
 }
