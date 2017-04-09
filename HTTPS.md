@@ -539,3 +539,22 @@ OpenSSL(boringssl)在我们的测试用例里，比JDK SSL 快10倍，10倍!!! �
 
 
 
+---
+在迁移到HTTPS之前需要考虑的事情
+<https://zhuanlan.zhihu.com/p/25558110?from=timeline>
+对于 QPS 比较高的入口, 从 HTTP 迁移到 HTTPS, 最重要的因素是要先判断这台机器的 TLS/SSL 计算能力. 你可能从一台 64G 内存的普通机器, 放个 nginx, 就能抗住百万并发, 迁移到 HTTPS 之后, CPU 的 load 完全就无法应对那么高的 TLS/SSL 握手 , 导致用户无法连接.
+如何简单地判断从 HTTP 切换到 HTTPS 的成本呢? 主要看下面几点:
+
+机器对 RSA 的私钥解密 (或签名) 的计算能力
+是长连接还是短连接
+机器对 AES 的计算能力
+面向的客户端是否支持 SSL 的 session reuse
+
+RSA 的解密速度 : 
+`openssl speed rsa2048` 这个命令去检查所在物理机的解密速度
+
+单核的 RSA 解密能力在 800 ~ 1000 左右, 所以一台 16 个物理核心(没超线程), 大致能接受的 HTTPS 新建连接数是 16k. 
+OpenSSL 对 AES 对称加密的能力 很快
+
+----
+Let's Encrypt 使用教程，让你的网站拥抱 HTTPS:<http://mp.weixin.qq.com/s/vGYlu5K9df_MqlAX0fysbQ>
