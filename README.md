@@ -11,6 +11,7 @@ http://spring.io/blog/2014/03/07/deploying-spring-boot-applications
 @采蘑菇的大叔 贡献的 DEMO http://git.oschina.net/icer/iblog。用 SpringBoot 搭了个架子，整合了 freemarker 和 mybatis。
 
 ---
+
 spring boot executable jar/war 原理:<http://blog.csdn.net/hengyunabc/article/details/51050219>
 
 spring boot里其实不仅可以直接以 java -jar demo.jar的方式启动，还可以把jar/war变为一个可以执行的脚本来启动，比如./demo.jar。
@@ -31,4 +32,7 @@ spring boot里其实不仅可以直接以 java -jar demo.jar的方式启动，�
 ```
 http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#deployment-install
  
+---
+ <http://swagger.io/swagger-ui/>
+ <https://github.com/swagger-api/swagger-ui>
  

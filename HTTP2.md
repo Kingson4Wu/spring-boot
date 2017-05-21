@@ -41,3 +41,8 @@ linux:<https://www.sysgeek.cn/curl-with-http2-support/>
 <https://imququ.com/post/http2-resource.html>
 
 
+---
+http2的请求头压缩
+http2的多路复用
+http2的服务端推送
+
