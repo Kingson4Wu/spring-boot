@@ -10,6 +10,8 @@ http://spring.io/blog/2014/03/07/deploying-spring-boot-applications
 
 @采蘑菇的大叔 贡献的 DEMO http://git.oschina.net/icer/iblog。用 SpringBoot 搭了个架子，整合了 freemarker 和 mybatis。
 
+spring-retry重试与熔断详解:<https://mp.weixin.qq.com/s/G0iUJuII02aYKe97yIYo1w>
+
 ---
 
 spring boot executable jar/war 原理:<http://blog.csdn.net/hengyunabc/article/details/51050219>

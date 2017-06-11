@@ -1,4 +1,6 @@
-
+HTTPS（HTTP over TLS/SSL）,TLS/SSL(会话层)
+SSL（Secure Socket Layer）是安全套接层，TLS（Transport Layer Security）是传输层安全协议，建立在SSL3.0协议规范，是 SSL3.0 的后续版本。
+-------------------------------------
 <http://blog.csdn.net/ro_wsy/article/details/51319963>
 
 如果你使用Spring Boot，并且想在内嵌tomcat中添加HTTPS，需要如下步骤
@@ -562,12 +564,24 @@ Let's Encrypt 使用教程，让你的网站拥抱 HTTPS:<http://mp.weixin.qq.co
 
 ---
 
-当用户浏览地址栏输入域名访问时，浏览器大部分缺省是通过HTTP访问的，这时我们的用户自己的网站就要做一个配置，做302的跳转，
+#### STS的header
+
++ Strict Transport Security (STS) 是用来配置浏览器和服务器之间安全的通信。
+它主要是用来防止中间人攻击，因为它强制所有的通信都走TLS。目前IE还不支持 STS头。需要注意的是，在普通的http请求中配置STS是没有作用的，
+因为攻击者很容易就能更改这些值。为了防止这样的现象发生，很多浏览器内置了一 个配置了STS的站点list。
+
++ 当用户浏览地址栏输入域名访问时，浏览器大部分缺省是通过HTTP访问的，这时我们的用户自己的网站就要做一个配置，做302的跳转，
 所有的HTTP请求都让它访问HTTPS，这可以实现HTTPS的访问，如果仅仅 302 的话，以后的访问请求每次都需要从HTTP跳转到HTTPS，
 多了一次 HTTP 请求的处理。对此，还需要有另外的配置，浏览器的访问跟随了跳转后，重新发起一个HTTPS请求，服务器除了正常给到内容外，
 会多加一个STS的header，header标识告诉浏览器以后这个域名就要强制走HTTPS，并给出一个超大的超时时间。
-
+<br/>
 用户关掉浏览器，下次又要访问网站时，浏览器直接会把HTTP请求在内部转成HTTPS，实现了真正的HTTPS，
 以后浏览器在这个超时时间内都会通过HTTPS进行访问。
+
+<https://mp.weixin.qq.com/s/D62UqQye8NLbVzdwF5zjVQ>
+
+ 
+---
+也许这样理解 HTTPS 更容易:<https://mp.weixin.qq.com/s/O-A6D7VVu3eBDjyi7M7EbA>
  
  

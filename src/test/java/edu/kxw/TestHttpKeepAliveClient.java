@@ -15,6 +15,7 @@ import org.junit.Test;
  */
 public class TestHttpKeepAliveClient {
 
+
     @Test
     public void testHeader() throws InterruptedException {
         String url = "http://localhost:8080/user/object?name=ds&id=2&";
@@ -61,3 +62,13 @@ public class TestHttpKeepAliveClient {
 
     }
 }
+
+/**
+ <pre>
+ ~ netstat -na |grep 8080
+ tcp4       0      0  127.0.0.1.8080         127.0.0.1.61869        ESTABLISHED
+ tcp4       0      0  127.0.0.1.61869        127.0.0.1.8080         ESTABLISHED
+ tcp46      0      0  *.8080                 *.*                    LISTEN
+ </pre>
+
+ */
