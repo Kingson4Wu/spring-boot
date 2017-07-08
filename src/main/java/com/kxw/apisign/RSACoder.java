@@ -10,7 +10,6 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -173,7 +172,7 @@ public class RSACoder {
      * @param args
      * @throws Exception
      */
-    public static void main(String[] args) throws Exception {
+   /* public static void main(String[] args) throws Exception {
         //初始化密钥
         //生成密钥对
         Map<String, Object> keyMap = RSACoder.initKey();
@@ -215,5 +214,5 @@ public class RSACoder {
         byte[] decode2 = RSACoder.decryptByPrivateKey(code2, privateKey);
 
         System.out.println("甲方解密后的数据：" + new String(decode2));
-    }
+    }*/
 }
