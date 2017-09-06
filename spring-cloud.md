@@ -52,4 +52,5 @@ Spring Cloud包含了多个子项目（针对分布式系统中涉及的多个�
 
 Spring Cloud构建微服务架构（一）服务注册与发现:<http://mp.weixin.qq.com/s/bXo2u2ODpKknrubF_IXqvQ>
 
+Spring Cloud 系列文章: <http://www.ityouknow.com/spring-cloud>
 
