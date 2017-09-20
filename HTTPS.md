@@ -278,7 +278,7 @@ node如何让一个端口同时支持https与http
 HTTP与HTTPS都属于应用层协议，所以只要我们在底层协议中进行反向代理，就可以解决这个问题! 刚好node可以让我们很方便的创建一个tcp服务器！
 
 总结:
-HTTPS和HTTP是应用层的,是以ip+端口传递数据的,要实现通个端口实现两种协议,需要在TCP层进行转发处理.
+HTTPS和HTTP是应用层的,是以ip+端口传递数据的,要实现同个端口实现两种协议,需要在TCP层进行转发处理.(错了?https默认端口是443)
 nginx已经实现,或者自己基于TCP实现
 
 ```node
@@ -580,8 +580,16 @@ Let's Encrypt 使用教程，让你的网站拥抱 HTTPS:<http://mp.weixin.qq.co
 
 <https://mp.weixin.qq.com/s/D62UqQye8NLbVzdwF5zjVQ>
 
++ 网站采用 HSTS 后，用户访问时无需手动在地址栏中输入 HTTPS，浏览器会自动采用 HTTPS 访问网站地址，从而保证用户始终访问到网站的加密链接，保护数据传输安全。
+首先在服务器响应头中添加 HSTS 响应头：Strict-Transport-Security: max-age=expireTime [; includeSubDomains] [; preload] 
+此响应头只有在 https 访问返回时才生效，其中[ ]中的参数表示可选；
+☉ 设置 max-age 参数，时间设置不宜过长，建议设置时间为 6 个月；
+☉ 当用户下次使用 HTTP 访问，客户端就会进行内部跳转，并且能够看到 307 Redirect Internel 的响应码；
+☉ 网站服务器变成了 HTTPS 访问源服务器。
+
  
 ---
-也许这样理解 HTTPS 更容易:<https://mp.weixin.qq.com/s/O-A6D7VVu3eBDjyi7M7EbA>
- 
- 
++ 也许这样理解 HTTPS 更容易:<https://mp.weixin.qq.com/s/O-A6D7VVu3eBDjyi7M7EbA>
++ HTTPS科普扫盲帖:<https://segmentfault.com/a/1190000004523659> 
++ 全站 HTTPS 来了:<http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=417>
++ 数字证书原理:<> 

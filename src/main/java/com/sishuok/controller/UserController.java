@@ -1,5 +1,11 @@
 package com.sishuok.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.sishuok.entity.User;
 import org.eclipse.jetty.server.Request;
 import org.slf4j.Logger;
@@ -10,11 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.Map;
 
 /**
  * <p>User: Zhang Kaitao
@@ -70,6 +71,26 @@ public class UserController {
         User user = new User();
         user.setId(id);
         user.setName("zhang");
+
+        System.out.println("1:" + this.getClass().getClassLoader());
+        System.out.println("2:" + User.class.getClassLoader());
+        System.out.println("22:" + UserController.class.getClassLoader());
+        System.out.println("3:" + Thread.currentThread().getContextClassLoader());
+        System.out.println("---------");
+
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        try {
+            cl.loadClass("com.kxw.apisign.RSACoder");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        /**
+         * 1:sun.misc.Launcher$AppClassLoader@b4c966a
+         2:sun.misc.Launcher$AppClassLoader@b4c966a
+         22:sun.misc.Launcher$AppClassLoader@b4c966a
+         3:TomcatEmbeddedWebappClassLoader
+         */
         return user;
     }
 

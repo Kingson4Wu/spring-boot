@@ -1,12 +1,10 @@
 package com.sishuok;
 
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
+import org.apache.catalina.connector.Connector;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -71,7 +69,7 @@ public class Application {
     }*/
 
     /** tomcat https 和 https 兼容 */
-    /*@Bean
+    @Bean
     public EmbeddedServletContainerFactory servletContainer() {
         TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
         tomcat.addAdditionalTomcatConnectors(createHttpConnector());
@@ -83,7 +81,7 @@ public class Application {
         connector.setPort(8080);
         connector.setSecure(false);
         return connector;
-    }*/
+    }
 
     /**  Jetty Https */
   /* @Bean
@@ -109,7 +107,7 @@ public class Application {
     /**
      * Jetty Http
      */
-    @Bean
+    /*@Bean
     public EmbeddedServletContainerFactory embeddedServletContainerFactory() throws Exception {
         return new JettyEmbeddedServletContainerFactory() {
             @Override
@@ -123,7 +121,7 @@ public class Application {
                 return super.getJettyEmbeddedServletContainer(server);
             }
         };
-    }
+    }*/
 
     /**
      * Jetty redirect http to https
