@@ -1,4 +1,4 @@
-package com.sishuok.entity;
+package com.kxw.entity;
 
 /**
  * <p>User: Zhang Kaitao 

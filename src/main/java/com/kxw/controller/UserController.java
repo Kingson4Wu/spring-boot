@@ -1,4 +1,4 @@
-package com.sishuok.controller;
+package com.kxw.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.sishuok.entity.User;
+import com.kxw.entity.User;
 import org.eclipse.jetty.server.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class UserController {
 
         System.out.println(User.class.getClassLoader());
         try {
-            User user2 = (User) Class.forName("com.sishuok.entity.User").newInstance();
+            User user2 = (User) Class.forName("com.kxw.entity.User").newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
