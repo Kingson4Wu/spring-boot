@@ -17,6 +17,8 @@
 
 ---
 
++ 使用注解 @EnableRetry @Retryable 
+
 + spring boot executable jar/war 原理:<http://blog.csdn.net/hengyunabc/article/details/51050219>
 
 + spring boot里其实不仅可以直接以 java -jar demo.jar的方式启动，还可以把jar/war变为一个可以执行的脚本来启动，比如./demo.jar。
@@ -87,6 +89,7 @@
 + 浅析分布式下的事件驱动机制（ PubSub 模式 ）:<https://www.cnkirito.moe/2017/09/13/event-2/>
     - spring-boot-starter-data-redis, spring-boot-starter-activemq
     
++ 基于 Redis 的分布式锁组件 spring-boot-klock-starter:<https://mp.weixin.qq.com/s/TEPR5u3UVaRys667xPSfSg>
 
 
 ---       
