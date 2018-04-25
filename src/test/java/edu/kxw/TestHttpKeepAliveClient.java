@@ -72,3 +72,15 @@ public class TestHttpKeepAliveClient {
  </pre>
 
  */
+
+/**
+ *
+ * https://my.oschina.net/flashsword/blog/80037
+ * Keep-alive只是HTTP1.0时代对持久化连接的叫法，目前HTTP1.1已经默认所有请求都是持久化的，RFC规范是正确的。
+ *
+ * 头部不设置Connection: keep-alive，依然会进行持久化连接。
+ *
+ * 如果设置Connection:close，则不进行持久化连接。
+ *
+ * 目前连接过期时间在服务端设置，Keep-Alive头设置超时时间的做法已经不再有效。
+ */

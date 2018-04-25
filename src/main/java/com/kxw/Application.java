@@ -1,6 +1,7 @@
 package com.kxw;
 
 import org.apache.catalina.connector.Connector;
+import org.apache.coyote.AbstractProtocol;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
@@ -80,6 +81,8 @@ public class Application {
         connector.setScheme("http");
         connector.setPort(8080);
         connector.setSecure(false);
+        ((AbstractProtocol) connector.getProtocolHandler())
+                .setKeepAliveTimeout(30000);
         return connector;
     }
 
