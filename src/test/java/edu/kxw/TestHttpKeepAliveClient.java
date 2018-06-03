@@ -27,6 +27,8 @@ public class TestHttpKeepAliveClient {
 
 
         HttpGet httpGet = new HttpGet(url);
+        //httpGet.addHeader("Connection", "Close");
+        httpGet.addHeader("Keep-alive", "3000");
 
         //httpGet.addHeader("Connection", "keep-alive");
 
@@ -45,9 +47,12 @@ public class TestHttpKeepAliveClient {
 
             }
 
+
             Thread.sleep(5000);
 
             closeableHttpClient.execute(httpGet);
+
+            Thread.sleep(1000);
 
         } catch (IOException e) {
             e.printStackTrace();

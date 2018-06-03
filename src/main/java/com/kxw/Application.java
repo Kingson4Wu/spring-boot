@@ -82,7 +82,7 @@ public class Application {
         connector.setPort(8080);
         connector.setSecure(false);
         ((AbstractProtocol) connector.getProtocolHandler())
-                .setKeepAliveTimeout(30000);
+                .setKeepAliveTimeout(5000);
         return connector;
     }
 
