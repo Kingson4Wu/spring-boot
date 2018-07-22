@@ -104,6 +104,23 @@ import org.springframework.web.bind.annotation.RestController;
  application:8083:6022
  application:8081:6982
  *
+ *
+
+ curl -i "http://nginx.inner.proxy.com/nginx/hello"
+ HTTP/1.1 502 Bad Gateway
+ Server: nginx/1.15.1
+ Date: Sun, 22 Jul 2018 14:33:03 GMT
+ Content-Type: text/html
+ Content-Length: 173
+ Connection: keep-alive
+
+ <html>
+ <head><title>502 Bad Gateway</title></head>
+ <body bgcolor="white">
+ <center><h1>502 Bad Gateway</h1></center>
+ <hr><center>nginx/1.15.1</center>
+ </body>
+ </html>
  */
 @RestController
 @RequestMapping("/nginx")
