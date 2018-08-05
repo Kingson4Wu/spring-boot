@@ -68,30 +68,38 @@ public class TestNginxCheck {
 
     /**
      * upstream nginx.inner.proxy.com {
-     server localhost:8081 weight=999 max_fails=5 fail_timeout=10s;
-     server localhost:8082 weight=999 max_fails=5 fail_timeout=10s;
-     server localhost:8083 weight=1 max_fails=5 fail_timeout=10s backup;
-     server localhost:8084 weight=1 max_fails=5 fail_timeout=10s backup;
-     check interval=3000 rise=2 fall=3 timeout=2500 type=tcp;# 每3s检查一次，成功2次标记up，失败3>次则标记down，超时时间2.5s
-     keepalive 32;
-
-     }
+     * server localhost:8081 weight=999 max_fails=5 fail_timeout=10s;
+     * server localhost:8082 weight=999 max_fails=5 fail_timeout=10s;
+     * server localhost:8083 weight=1 max_fails=5 fail_timeout=10s backup;
+     * server localhost:8084 weight=1 max_fails=5 fail_timeout=10s backup;
+     * check interval=3000 rise=2 fall=3 timeout=2500 type=tcp;# 每3s检查一次，成功2次标记up，失败3>次则标记down，超时时间2.5s
+     * keepalive 32;
+     *
+     * }
+     *
+     * less 808* |grep 'a6ba8bff-146f-40b4-81d2-0007e8adefd0'
+     *
+     * 502 的情况并不会重试...
+     *
+     * type= tcp,50x 是http,并不会剔除
+     *
      */
     @Test
     public void testNginx50xRetry() {
 
         try {
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                .url("http://nginx.inner.proxy.com/nginx/serverSuccessOrError/502?uuid=" + UUID.randomUUID())
-                .build();
 
+            OkHttpClient client = new OkHttpClient();
             long stopTime = Instant.now().plusSeconds(10).toEpochMilli();
             while (System.currentTimeMillis() < stopTime) {
+                String uuid = UUID.randomUUID().toString();
+                Request request = new Request.Builder()
+                    .url("http://nginx.inner.proxy.com/nginx/serverSuccessOrError/502?uuid=" + uuid)
+                    .build();
                 Response response = client.newCall(request).execute();
 
                 System.out.println("code: " + response.code() + ", remote: " + response.header("X-Application-Context")
-                    + ", resp:" + response.body().string());
+                    + ", resp:" + response.body().string() + " , " + uuid);
             }
 
         } catch (Exception e) {
@@ -101,4 +109,32 @@ public class TestNginxCheck {
         }
 
     }
+
+    @Test
+    public void testNginx50xOut() {
+
+        try {
+
+            OkHttpClient client = new OkHttpClient();
+            long stopTime = Instant.now().plusSeconds(10).toEpochMilli();
+            while (System.currentTimeMillis() < stopTime) {
+                String uuid = UUID.randomUUID().toString();
+                Request request = new Request.Builder()
+                    .url("http://nginx.inner.proxy.com/nginx/server50xOut/502?uuid=" + uuid)
+                    .build();
+                Response response = client.newCall(request).execute();
+
+                System.out.println("code: " + response.code() + ", remote: " + response.header("X-Application-Context")
+                    + ", resp:" + response.body().string() + " , " + uuid);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+        }
+
+    }
+
+
 }

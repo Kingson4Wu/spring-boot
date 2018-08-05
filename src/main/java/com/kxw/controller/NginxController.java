@@ -182,4 +182,28 @@ public class NginxController {
         }
 
     }
+
+    /**
+     * curl -i "http://localhost:8080/nginx/server50xOut/502?uuid=sfddfd"
+     *
+     * @param code
+     * @param response
+     */
+    @RequestMapping("/server50xOut/{code}")
+    public void server50xOut(@PathVariable("code") int code, String uuid, HttpServletResponse response) {
+
+        int random =  ThreadLocalRandom.current().nextInt();
+        if (System.getProperty("server.port").equals("8082")) {
+            logger.info("serverSuccessOrError error :{}, {}, {}...", code, random, uuid);
+            response.setStatus(code);
+        } else {
+            try {
+                response.getWriter().write("hello ...");
+                logger.info("serverSuccessOrError success :{}, {}, {}...", code, random, uuid);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 }
