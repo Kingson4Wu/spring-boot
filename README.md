@@ -91,7 +91,9 @@
     
 + 基于 Redis 的分布式锁组件 spring-boot-klock-starter:<https://mp.weixin.qq.com/s/TEPR5u3UVaRys667xPSfSg>
 
++ Spring Boot 1.X和2.X优雅重启实战:<http://www.spring4all.com/article/1136>
 
 ---       
+
 
  
