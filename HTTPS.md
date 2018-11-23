@@ -593,3 +593,7 @@ Let's Encrypt 使用教程，让你的网站拥抱 HTTPS:<http://mp.weixin.qq.co
 + HTTPS科普扫盲帖:<https://segmentfault.com/a/1190000004523659> 
 + 全站 HTTPS 来了:<http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=417>
 + 数字证书原理:<> 
+
+---
+NGINX 配置Https：https://blog.csdn.net/weixin_35884835/article/details/52588157
+

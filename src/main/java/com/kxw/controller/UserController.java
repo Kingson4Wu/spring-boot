@@ -66,6 +66,11 @@ public class UserController {
      * 在idea的java compiler中加入 -g:none ，再跑起来，调用url，会报错：
      * java.lang.IllegalArgumentException: Name for argument type [int] not available, and parameter name information not found in class file either.
      * 由此说明，使用maven编译打包时回把方法的参数名信息加入class文件的，也就是说asm读取参数名字时从class文件获取的。
+     *
+     * http://localhost:8080/user/baseType.sdod?count=3&id=44 也能访问
+     * Spring MVC中，在路径参数中如果带”.”的话“.”后面的值将会被忽略。例如访问http://http://localhost:8080/pathvar/xx.yy。Spring MVC就会把“.”后面的yy忽略。
+     *  configurer.setUseSuffixPatternMatch(false);能解决
+     *  {@link com.kxw.WebMvcConfig#configurePathMatch}
      */
     @RequestMapping("/baseType")
     public User baseType(int count, long id) {
