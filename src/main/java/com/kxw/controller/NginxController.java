@@ -126,6 +126,15 @@ import org.springframework.web.bind.annotation.RestController;
  * <hr><center>nginx/1.15.1</center>
  * </body>
  * </html>
+ *
+ *
+ * ----
+ *
+ * tengine使用proxy_upstream_tries模块实现限制重试的次数
+ * https://github.com/alibaba/tengine/issues/931
+
+ *
+ *
  */
 @RestController
 @RequestMapping("/nginx")
