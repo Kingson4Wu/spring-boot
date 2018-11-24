@@ -27,3 +27,4 @@ git.properties
 version.txt
 git.commit.id.txt
 *.versionsBackup
+.gradle/
