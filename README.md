@@ -95,5 +95,8 @@
 
 ---       
 
+@Transational
+自身调用，是因为Spring的AOP在调用的时候判断是否是this调用，如果是的话，就不会走代理，所以不会有事务，可以使用AopContext来解决
+解决方案:((Foo) AopContext.currentProxy()).bar();
 
  
