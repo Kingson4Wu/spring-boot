@@ -93,6 +93,8 @@
 
 + Spring Boot 1.X和2.X优雅重启实战:<http://www.spring4all.com/article/1136>
 
++ 面试官：为什么 Spring Boot 的 jar 可以直接运行？:<https://mp.weixin.qq.com/s/6OQPkzImIzEQSr1LvQa5Dg>
+
 ---       
 
 @Transational
